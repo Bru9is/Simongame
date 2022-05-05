@@ -7,40 +7,123 @@ class Game{
   constructor (){
     this.colorsArr = ["green", "yellow", "red", "blue"]
     this.sequence = []
+    this.playerSequence = []
+    this.count = ""
+    this.turn = 0
+    this.compTurn = false
+    this.strict = false
+    this.win = ""
+    this.good = ""
+    this.flash = 0
+    this.on = false
+  }
+  
+  play() {
+    this.sequence = []
+    this.playerSequence = []
+    this.count = 0
     this.nivel = 1
-  }
+    this.win = false
+    this.good = true
+    this.flash = 0
+    this.intervalId = 0
+    for (var i = 0; i < 20; i++){
+      this.sequence.push(Math.floor(Math.random() * 4) + 1)
+      }
+      this.compTurn = true
+      this.gameTurn()
+      
+  //    this.intervalId = setInterval(this.gameTurn(), 800)
+    }
   
-  compare(){
-    return Math.random() - 0.5
-  }  
-  
-  fillSequence(){
-		this.colorsArr.sort(this.compare)
-		this.sequence.push(this.colorsArr[0])
-    this.nivel ++
+  clearColor(){
+    btnRed.style.backgroundColor = "darkred"
+    btnYellow.style.backgroundColor = "darkorange"
+    btnBlue.style.backgroundColor = "darkblue"
+    btnGreen.style.backgroundColor = "darkgreen"
   }
 
-  compareArr(arr1, arr2){
-    return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index])
+  one() {
+    btnGreen.style.backgroundColor = "lightgreen"
   }
 
-  checkResult(respostas){
-    //compara respostas com sequence 
-    //se for correto, incremente o this.nivel e chama a função fillSequence
-
-    //se for incorreto, Game Over
-    console.log(this.compareArr(respostas, this.sequence))
+  two() {
+    btnYellow.style.backgroundColor = "lightorange"
   }
-  
-  
-  if (this.checkResult(respostas) == false) {
-    game.strict = true;
-    $('#strict').html('Is currently On').removeClass('btn-primary').addClass('btn-danger');
-  } else {
-    game.strict = false;
-    $('#strict').html('Is currently Off').removeClass('btn-danger').addClass('btn-primary');
+
+  three() {
+    btnBlue.style.backgroundColor = "lightblue"
+  }
+
+  four() {
+    btnRed.style.backgroundColor = "lightred"
+  }
+
+  gameTurn(){
+    this.flash = 0
+    this.nivel++
+    this.playerSequence = []
+    
+    for (let i = 0; i < this.nivel; i++){
+      if (this.sequence[i] == 1) this.one()
+      if (this.sequence[i] == 2) this.two()
+      if (this.sequence[i] == 3) this.three()
+      if (this.sequence[i] == 4) this.four()
+    }
+    
+   
+    /* 
+    if (this.flash == this.turn){
+      clearInterval(this.intervalId)
+      //this.compTurn = false
+      this.clearColor()
+      
+    }
+    
+    if (this.compTurn) {
+      this.clearColor()
+      setTimeout(() => {
+        console.log(this.flash)
+        if (this.sequence[this.flash] == 1) this.one()
+        if (this.sequence[this.flash] == 2) this.two()
+        if (this.sequence[this.flash] == 3) this.three()
+        if (this.sequence[this.flash] == 4) this.four()
+      }, 200)
+      this.flash++
+    }
+*/
+  }
+  check(){
+    if(this.sequence[this.flash] == this.playerSequence[this.flash]){
+      this.flash++
+    }
+    else{
+      alert("Game Over")
+
+    }
+  }
+
+  checkEndRound(){
+    if(this.flash === this.nivel-1){
+      this.gameTurn()
+    }
   }
 }
+//Montar array com todas as cores
+//Piscar a cor referente a posição flash
+//usuário clicar na cor, e a cor é inserida na array playerSequence
+//comparar sequence na posição flash com a playerSequence na mesma posição
+//incrementar flash
+//
+
+
+
+
+
+
+
+
+
 
 /*
 class Sequencia{

@@ -24,10 +24,10 @@ body{
     justify-content: center;
 
 }
-.control-verde{
+.btn-green{
     padding: 1rem;
     cursor: pointer;
-    background-color: green;
+    background-color: darkgreen;
     width: 55px;
     height: 55px;
     border-radius: 50%;
@@ -38,10 +38,10 @@ body{
     box-shadow: grey;
 }
 
-.control-vermelho{
+.btn-red{
     padding: 1rem;
     cursor: pointer;
-    background-color: red;
+    background-color: darkred;
     width: 55px;
     height: 55px;
     border-radius: 50%;
@@ -52,10 +52,10 @@ body{
     
 }
 
-.control-amarelo{
+.btn-yellow{
     padding: 1rem;
     cursor: pointer;
-    background-color: yellow;
+    background-color: darkorange;
     width: 55px;
     height: 55px;
     border-radius: 50%;
@@ -66,10 +66,10 @@ body{
     
 }
 
-.control-azul{
+.btn-blue{
     padding: 1rem;
     cursor: pointer;
-    background-color: blue;
+    background-color: darkblue;
     width: 55px;
     height: 55px;
     border-radius: 50%;

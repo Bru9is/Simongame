@@ -79,3 +79,19 @@ body{
     margin: .7rem 0;
     
 }
+
+.toggle {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  #turn {
+    
+    background: #330000;
+    color: red;
+    font-family: courier;
+    font-size: 20px;
+    height: 30px;
+    width: 50px;
+    line-height: 30px;
+  }

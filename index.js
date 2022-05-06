@@ -1,177 +1,140 @@
-//1 Chama a função runnivel - Faz a cor piscar uma vez para o usuário imitar
-//2 Cahama a função checkResul - irá checar se o que o usuário imitou está correto. Recebe como argumento playerArr com as escolhas do usuário
-// 2.1 Se acertou chama a função runNivel, com incremento de mais 1
-// 2.2 Se o usuário errou, Game Over.
+let order = [];
+let playerOrder = [];
+let flash;
+let turn;
+let good;
+let compTurn;
+let intervalId;
+let strict = false;
+let noise = true;
+let on = false;
+let win;
 
-class Game{
-  constructor (){
-    this.colorsArr = ["green", "yellow", "red", "blue"]
-    this.sequence = []
-    this.playerSequence = []
-    this.count = ""
-    this.turn = 0
-    this.compTurn = false
-    this.strict = false
-    this.win = ""
-    this.good = ""
-    this.flash = 0
-    this.on = false
-  }
-  
-  play() {
-    this.sequence = []
-    this.playerSequence = []
-    this.count = 0
-    this.nivel = 1
-    this.win = false
-    this.good = true
-    this.flash = 0
-    this.intervalId = 0
-    for (var i = 0; i < 20; i++){
-      this.sequence.push(Math.floor(Math.random() * 4) + 1)
-      }
-      this.compTurn = true
-      this.gameTurn()
-      
-  //    this.intervalId = setInterval(this.gameTurn(), 800)
-    }
-  
-  clearColor(){
-    btnRed.style.backgroundColor = "darkred"
-    btnYellow.style.backgroundColor = "darkorange"
-    btnBlue.style.backgroundColor = "darkblue"
-    btnGreen.style.backgroundColor = "darkgreen"
-  }
 
-  one() {
-    btnGreen.style.backgroundColor = "lightgreen"
-  }
 
-  two() {
-    btnYellow.style.backgroundColor = "lightorange"
+function play() {
+  win = false;
+  order = [];
+  playerOrder = [];
+  flash = 0;
+  intervalId = 0;
+  turn = 1;
+  turnCounter.innerHTML = 1;
+  good = true;
+  for (var i = 0; i < 20; i++) {
+    order.push(Math.floor(Math.random() * 4) + 1);
   }
+  compTurn = true;
 
-  three() {
-    btnBlue.style.backgroundColor = "lightblue"
-  }
-
-  four() {
-    btnRed.style.backgroundColor = "lightred"
-  }
-
-  gameTurn(){
-    this.flash = 0
-    this.nivel++
-    this.playerSequence = []
-    
-    for (let i = 0; i < this.nivel; i++){
-      if (this.sequence[i] == 1) this.one()
-      if (this.sequence[i] == 2) this.two()
-      if (this.sequence[i] == 3) this.three()
-      if (this.sequence[i] == 4) this.four()
-    }
-    
-   
-    /* 
-    if (this.flash == this.turn){
-      clearInterval(this.intervalId)
-      //this.compTurn = false
-      this.clearColor()
-      
-    }
-    
-    if (this.compTurn) {
-      this.clearColor()
-      setTimeout(() => {
-        console.log(this.flash)
-        if (this.sequence[this.flash] == 1) this.one()
-        if (this.sequence[this.flash] == 2) this.two()
-        if (this.sequence[this.flash] == 3) this.three()
-        if (this.sequence[this.flash] == 4) this.four()
-      }, 200)
-      this.flash++
-    }
-*/
-  }
-  check(){
-    if(this.sequence[this.flash] == this.playerSequence[this.flash]){
-      this.flash++
-    }
-    else{
-      alert("Game Over")
-
-    }
-  }
-
-  checkEndRound(){
-    if(this.flash === this.nivel-1){
-      this.gameTurn()
-    }
-  }
+  intervalId = setInterval(gameTurn, 800);
 }
-//Montar array com todas as cores
-//Piscar a cor referente a posição flash
-//usuário clicar na cor, e a cor é inserida na array playerSequence
-//comparar sequence na posição flash com a playerSequence na mesma posição
-//incrementar flash
-//
 
+function gameTurn() {
+  on = false;
 
-
-
-
-
-
-
-
-
-/*
-class Sequencia{
-  constructor(){
-  this.colors = { 
-    1: 'verde', 
-    2: 'amarelo', 
-    3: 'azul', 
-    4: 'vermelho', 
-    5: 'preto'
+  if (flash == turn) {
+    clearInterval(intervalId);
+    compTurn = false;
+    clearColor();
+    on = true;
   }
 
-  this.counter = 5;  
-  this.nivel = 0;
-  this.colorsArr = [1, 2, 3, 4, 5]
-	this.playerArr = []
-	this.answerArr = []
-  }  
-  
-
-	
-  fillCompArr (){
-		this.colorsArr.sort(this.compare)
-		this.answerArr.push(this.colorsArr[0])
-  return this.answerArr
-	}
-
-  fillPlayerArr (color){
-    this.playerArr.push(color)
-    return this.playerArr
-  }
-  
-  checkResult (){
-    this.answerArr.forEach((elemento, index) => {
-      if (this.playerArr[index] === elemento){
-        this.fillCompArr()
-        console.log('oi')
-      }
-      else {
-        console.log("game Over")
-      }
-    })
+  if (compTurn) {
+    clearColor();
+    setTimeout(() => {
+      if (order[flash] == 1) one();
+      if (order[flash] == 2) two();
+      if (order[flash] == 3) three();
+      if (order[flash] == 4) four();
+      flash++;
+    }, 200);
   }
 }
 
-const sequencia = new Sequencia()
-
-function jogoInic() {
-  sequencia.fillCompArr()
+function one() {
+  if (noise) {
+    let audio = document.getElementById("clip1");
+    audio.play();
+  }
+  noise = true;
+  btnGreen.style.backgroundColor = "lightgreen";
 }
-*/
+
+function two() {
+  if (noise) {
+    let audio = document.getElementById("clip3");
+    audio.play();
+  }
+  noise = true;
+  btnYellow.style.backgroundColor = "yellow";
+}
+
+function three() {
+  if (noise) {
+    let audio = document.getElementById("clip4");
+    audio.play();
+  }
+  noise = true;
+  btnBlue.style.backgroundColor = "lightskyblue";
+}
+
+function four() {
+  if (noise) {
+    let audio = document.getElementById("clip2");
+    audio.play();
+  }
+  noise = true;
+  btnRed.style.backgroundColor = "tomato";
+}
+
+function clearColor() {
+  btnGreen.style.backgroundColor = "darkgreen";
+  btnRed.style.backgroundColor = "darkred";
+  btnYellow.style.backgroundColor = "goldenrod";
+  btnBlue.style.backgroundColor = "darkblue";
+}
+
+function flashColor() {
+  btnGreen.style.backgroundColor = "lightgreen";
+  btnRed.style.backgroundColor = "tomato";
+  btnYellow.style.backgroundColor = "yellow";
+  btnBlue.style.backgroundColor = "lightskyblue";
+}
+
+
+
+function check() {
+  if (playerOrder[playerOrder.length - 1] !== order[playerOrder.length - 1])
+    good = false;
+
+  if (playerOrder.length == 20 && good) {
+    winGame();
+  }
+
+  if (good == false) {
+    flashColor();
+    turnCounter.innerHTML = "G.O!";
+    setTimeout(() => {
+      turnCounter.innerHTML = turn;
+      clearColor();
+    }, 800);
+
+    noise = false;
+  }
+
+  if (turn == playerOrder.length && good && !win) {
+    turn++;
+    playerOrder = [];
+    compTurn = true;
+    flash = 0;
+    turnCounter.innerHTML = turn;
+    intervalId = setInterval(gameTurn, 800);
+  }
+}
+
+function winGame() {
+  flashColor();
+  turnCounter.innerHTML = "WIN!";
+  on = false;
+  win = true;
+}

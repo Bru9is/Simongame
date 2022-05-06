@@ -1,140 +1,119 @@
-let order = [];
-let playerOrder = [];
-let flash;
-let turn;
-let good;
-let compTurn;
-let intervalId;
-let strict = false;
-let noise = true;
-let on = false;
-let win;
+//1 Chama a função runnivel - Faz a cor piscar uma vez para o usuário imitar
+//2 Cahama a função checkResul - irá checar se o que o usuário imitou está correto. Recebe como argumento playerArr com as escolhas do usuário
+// 2.1 Se acertou chama a função runNivel, com incremento de mais 1
+// 2.2 Se o usuário errou, Game Over.
 
-
-
-function play() {
-  win = false;
-  order = [];
-  playerOrder = [];
-  flash = 0;
-  intervalId = 0;
-  turn = 1;
-  turnCounter.innerHTML = 1;
-  good = true;
-  for (var i = 0; i < 20; i++) {
-    order.push(Math.floor(Math.random() * 4) + 1);
+class Game {
+  constructor (){
+    this.sequence = []
+    this.playerSequence = []
+    this.turn = 0
+    this.compTurn = false
+    this.flash = 0
+    this.gameOver = false
   }
-  compTurn = true;
-
-  intervalId = setInterval(gameTurn, 800);
-}
-
-function gameTurn() {
-  on = false;
-
-  if (flash == turn) {
-    clearInterval(intervalId);
-    compTurn = false;
-    clearColor();
-    on = true;
+  
+  play() {
+    this.sequence = []
+    this.playerSequence = []
+    this.nivel = 1
+    this.flash = 0
+    this.intervalId = 0
+    turnCounter.innerHTML = this.nivel;
+    for (var i = 0; i < 20; i++){
+      this.sequence.push(Math.floor(Math.random() * 4) + 1)
+      }
+      this.compTurn = true
+      this.gameTurn()
+    }
+  
+  clearColor(){
+    btnRed.style.backgroundColor = "darkred"
+    btnYellow.style.backgroundColor = "darkorange"
+    btnBlue.style.backgroundColor = "darkblue"
+    btnGreen.style.backgroundColor = "darkgreen"
   }
 
-  if (compTurn) {
-    clearColor();
-    setTimeout(() => {
-      if (order[flash] == 1) one();
-      if (order[flash] == 2) two();
-      if (order[flash] == 3) three();
-      if (order[flash] == 4) four();
-      flash++;
-    }, 200);
-  }
-}
-
-function one() {
-  if (noise) {
-    let audio = document.getElementById("clip1");
-    audio.play();
-  }
-  noise = true;
-  btnGreen.style.backgroundColor = "lightgreen";
-}
-
-function two() {
-  if (noise) {
-    let audio = document.getElementById("clip3");
-    audio.play();
-  }
-  noise = true;
-  btnYellow.style.backgroundColor = "yellow";
-}
-
-function three() {
-  if (noise) {
-    let audio = document.getElementById("clip4");
-    audio.play();
-  }
-  noise = true;
-  btnBlue.style.backgroundColor = "lightskyblue";
-}
-
-function four() {
-  if (noise) {
-    let audio = document.getElementById("clip2");
-    audio.play();
-  }
-  noise = true;
-  btnRed.style.backgroundColor = "tomato";
-}
-
-function clearColor() {
-  btnGreen.style.backgroundColor = "darkgreen";
-  btnRed.style.backgroundColor = "darkred";
-  btnYellow.style.backgroundColor = "goldenrod";
-  btnBlue.style.backgroundColor = "darkblue";
-}
-
-function flashColor() {
-  btnGreen.style.backgroundColor = "lightgreen";
-  btnRed.style.backgroundColor = "tomato";
-  btnYellow.style.backgroundColor = "yellow";
-  btnBlue.style.backgroundColor = "lightskyblue";
-}
-
-
-
-function check() {
-  if (playerOrder[playerOrder.length - 1] !== order[playerOrder.length - 1])
-    good = false;
-
-  if (playerOrder.length == 20 && good) {
-    winGame();
+  one() {
+    btnGreen.style.backgroundColor = "lightgreen"
   }
 
-  if (good == false) {
-    flashColor();
-    turnCounter.innerHTML = "G.O!";
-    setTimeout(() => {
-      turnCounter.innerHTML = turn;
-      clearColor();
-    }, 800);
-
-    noise = false;
+  two() {
+    btnYellow.style.backgroundColor = "yellow"
   }
 
-  if (turn == playerOrder.length && good && !win) {
-    turn++;
-    playerOrder = [];
-    compTurn = true;
-    flash = 0;
-    turnCounter.innerHTML = turn;
-    intervalId = setInterval(gameTurn, 800);
+  three() {
+    btnBlue.style.backgroundColor = "blue"
   }
-}
 
-function winGame() {
-  flashColor();
-  turnCounter.innerHTML = "WIN!";
-  on = false;
-  win = true;
+  four() {
+    btnRed.style.backgroundColor = "red"
+  }
+
+  gameTurn() {
+    this.flash = 0
+    this.playerSequence = []
+    if(this.compTurn) {  
+      
+      this.intervalId = setInterval(() => {
+       if (this.sequence[this.flash] == 1){
+        this.one()
+        setTimeout(() => {this.clearColor()}, 900)
+       } 
+       if (this.sequence[this.flash] == 2){
+        this.two()
+        setTimeout(() => {this.clearColor()}, 900)
+       }
+       if (this.sequence[this.flash] == 3){
+        this.three()
+        setTimeout(() => {this.clearColor()}, 900)
+       }
+       if (this.sequence[this.flash] == 4){
+        this.four()
+        setTimeout(() => {this.clearColor()}, 900)
+       } 
+        this.flash++
+        if (this.flash == this.nivel){
+          clearInterval(this.intervalId)
+          this.compTurn = false
+        }  
+      }, 1500)
+    }
+  }
+
+  check(){
+    
+    if (this.nivel == this.playerSequence.length) {
+      for (let i = 0; i < this.playerSequence.length; i++){
+        console.log(this.sequence[i])
+        console.log(this.playerSequence[i])
+        if (this.sequence[i] !== this.playerSequence[i]){
+        this.gameOver = true}
+      }
+      this.nivel++;
+      this.playerSequence = [];
+      this.compTurn = true;
+      this.flash = 0;
+      turnCounter.innerHTML = this.nivel;
+      if(!this.gameOver){
+      setTimeout(() => {
+        this.gameTurn()
+      }, 800)
+      }
+      else{
+        alert("Game Over")
+        this.sequence = []
+        this.playerSequence = []
+        this.nivel = 1
+        this.flash = 0
+        this.intervalId = 0
+      }
+    }
+     
+  }
+
+  winGame() {
+    this.flashColor();
+    this.turnCounter.innerHTML = "WIN!";
+  }
 }

@@ -13,7 +13,7 @@ start.addEventListener("click", () => {game.play()
 
 btnGreen.addEventListener("click", (event) => {
     game.playerSequence.push(1)
-    game.check()
+    //game.check()
     game.one()
     setTimeout(() => {game.clearColor()}, 800)
     
@@ -26,7 +26,7 @@ btnGreen.addEventListener("click", (event) => {
 
 btnYellow.addEventListener("click", (event) => {
     game.playerSequence.push(2)
-    game.check()
+    //game.check()
     game.two()
     setTimeout(() => {game.clearColor()}, 800)
     /*if(!game.win){
@@ -38,7 +38,7 @@ btnYellow.addEventListener("click", (event) => {
 
 btnBlue.addEventListener("click", (event) => {
     game.playerSequence.push(3)
-    game.check()
+    //game.check()
     game.three()
     setTimeout(() => {game.clearColor()}, 800)
     /*if(!game.win){
@@ -50,7 +50,7 @@ btnBlue.addEventListener("click", (event) => {
 
 btnRed.addEventListener("click", (event) => {
     game.playerSequence.push(4)
-    game.check()
+    //game.check()
     game.four()
     setTimeout(() => {game.clearColor()}, 800)
     /*if(!game.win){

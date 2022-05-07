@@ -82,7 +82,20 @@ class Game {
   }
 
   check(){
-    
+    console.log(this.playerSequence)
+    console.log(this.sequence[this.flash -1])
+    console.log(this.flash)
+    if (this.playerSequence[this.flash -1] !== this.sequence[this.flash -1]){
+      alert("Game Over")
+      this.one
+      this.two
+      this.three
+      this.four
+    }
+    if (this.playerSequence === this.nivel){
+      this.gameTurn
+    }
+    /*
     if (this.nivel == this.playerSequence.length) {
       for (let i = 0; i < this.playerSequence.length; i++){
         console.log(this.sequence[i])
@@ -109,11 +122,10 @@ class Game {
         this.intervalId = 0
       }
     }
-     
+  */
   }
-
   winGame() {
-    this.flashColor();
-    this.turnCounter.innerHTML = "WIN!";
+    this.flashColor()
+    this.turnCounter.innerHTML = "WIN!"
   }
 }
